@@ -31,5 +31,5 @@ RUN ["chown", "-R", "www-data:www-data", "/data_apache2"]
 VOLUME ["/data_apache2"]
 VOLUME ["/data_apache2/logs/apache2"]
 
-EXPOSE 80
+EXPOSE 443
 CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
