@@ -2,13 +2,6 @@ FROM ubuntu:14.04.2
 
 MAINTAINER khiraiwa
 
-# Initialize apt-get
-RUN ["apt-get", "update"]
-ENV DEBIAN_FRONTEND noninteractive
-RUN ["apt-get", "install", "apache2", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mcrypt", "-y"]
-RUN ["a2enmod", "php5"]
-RUN ["apt-get", "install", "mysql-server-5.6", "-y"]
-
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /data_apache2/log/apache2
@@ -19,6 +12,14 @@ ENV APACHE_SERVERADMIN admin@localhost
 ENV APACHE_SERVERNAME localhost
 ENV APACHE_SERVERALIAS docker.localhost
 ENV APACHE_DOCUMENTROOT /data_apache2/www
+
+# Initialize apt-get
+RUN ["apt-get", "update"]
+ENV DEBIAN_FRONTEND noninteractive
+RUN ["apt-get", "install", "apache2", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mcrypt", "mysql-client-5.6", "openssl",  "-y"]
+RUN ["a2enmod", "php5"]
+RUN ["a2enmod", "ssl"]
+RUN ["a2enmod", "rewrite"]
 
 # Mount data dir
 RUN ["mkdir", "-p", "/data_apache2/log/apache2"]
