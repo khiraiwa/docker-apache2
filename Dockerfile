@@ -7,6 +7,7 @@ RUN ["apt-get", "update"]
 ENV DEBIAN_FRONTEND noninteractive
 RUN ["apt-get", "install", "apache2", "libapache2-mod-php5", "php5-cli", "php-apc", "php5-mcrypt", "-y"]
 RUN ["a2enmod", "php5"]
+RUN ["apt-get", "install", "mysql-server-5.6", "-y"]
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
