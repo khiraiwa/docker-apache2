@@ -23,15 +23,20 @@ RUN ["a2enmod", "rewrite"]
 
 # Mount data dir
 RUN ["mkdir", "-p", "/data_apache2/log/apache2"]
+RUN ["mkdir", "-p", "/data_apache2/www"]
 
+# Add ssl conf file
 ADD 001-default-ssl.conf /etc/apache2/sites-available/001-default-ssl.conf
 RUN ["ln", "-s", "/etc/apache2/sites-available/001-default-ssl.conf", "/etc/apache2/sites-enabled/001-default-ssl.conf"]
+
+# Set DocumentRoot Dir
+RUN ["rm", "-rf", "/var/www/html"]
+RUN ["ln", "-s", "/data_apache2/www", "/var/www/html"]
 
 RUN ["chown", "-R", "www-data:www-data", "/etc/apache2"]
 RUN ["chown", "-R", "www-data:www-data", "/data_apache2"]
 
-VOLUME ["/data_apache2"]
-VOLUME ["/data_apache2/logs/apache2"]
+VOLUME ["/data_apache2", "/data_apache2/logs/apache2"]
 
 EXPOSE 443
 CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
