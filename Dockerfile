@@ -27,7 +27,11 @@ RUN ["mkdir", "-p", "/data_apache2/www"]
 
 # Add ssl conf file
 ADD 001-default-ssl.conf /etc/apache2/sites-available/001-default-ssl.conf
+RUN ["rm", "-f", "/etc/apache2/sites-available/000-default.conf"]
+ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN ["ln", "-s", "/etc/apache2/sites-available/001-default-ssl.conf", "/etc/apache2/sites-enabled/001-default-ssl.conf"]
+RUN ["rm", "-f", "/etc/apache2/sites-enabled/000-default.conf"]
+RUN ["ln", "-s", "/etc/apache2/sites-available/000-default.conf", "/etc/apache2/sites-enabled/000-default.conf"]
 
 # Set DocumentRoot Dir
 RUN ["rm", "-rf", "/var/www/html"]
